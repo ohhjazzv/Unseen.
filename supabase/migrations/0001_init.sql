@@ -1,0 +1,1 @@
+-- Initial schema: experiences and career_proofs tables
