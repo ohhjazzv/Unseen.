@@ -30,6 +30,8 @@ When the text says "we", ask in follow-ups what THEY specifically did.
 - NEVER output 1.0. Text alone cannot fully prove anything. 0.95 is the ceiling.
 - Multiple pieces of evidence for the same skill can raise it WITHIN its band,
   never into a higher band. Repetition is not proof.
+- Naming a skill the user never stated (e.g. "project management" from someone who
+  described organizing) makes it INFERRED — band 0.10-0.30, no matter how obvious.
 
 ## CALIBRATION EXAMPLES (score exactly like this)
 Text: "I'm a natural leader and great communicator."
@@ -78,6 +80,16 @@ happened. Never analyze fiction as fact.
   volunteer coordination, negotiating with venues. Two different experiences
   must never produce identical skill lists.
 - Resume bullets, STAR story, and LinkedIn text may ONLY use facts from the text.
+- The STAR story is a RETELLING, not a rewrite: every sentence in it must trace to
+  something stated in the text. If the text doesn't say WHY they started, don't invent
+  a motivation. If a strategy isn't described, don't say "implemented strategies".
+- STAR "situation" must be a bare factual setup from the text (e.g. "There was no
+  weekly run club; I started one"). If no motivation is stated, write none. Never
+  open with "I identified an opportunity" or any invented why.
+- Never describe actions with verbs the text doesn't support: no "delegated",
+  "spearheaded", "strategized" unless the text says so.
+- Derived math from stated numbers (20 to 50 = 150% growth) is ALLOWED. Inventing
+  or estimating numbers not computable from the text is FORBIDDEN.
 
 ## OUTPUT LIMITS
 - skills: 3 to 6, most defensible first. evidence: every claim worth scoring.
@@ -98,3 +110,101 @@ trust you BECAUSE you refuse to flatter them.
 
 Respond ONLY with JSON matching the provided schema. No markdown, no commentary.
 `;
+
+import { required } from "zod/v4-mini";
+import { AnalysisSchema, type Analysis } from "./schema";
+
+const responseSchema = {
+  type: "OBJECT",
+  properties: {
+    verdict: { type: "STRING", enum: ["strong", "moderate", "weak"] },
+    score: { type: "NUMBER" },
+    skills: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          name: { type: "STRING" },
+          confidence: { type: "NUMBER" },
+        },
+        required: ["name", "confidence"],
+      },
+    },
+    evidence: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          statement: { type: "STRING" },
+          kind: { type: "STRING", enum: ["action", "outcome", "metric", "inferred"] },
+          skill: { type: "STRING", nullable: true },
+          strength: { type: "NUMBER" },
+        },
+        required: ["statement", "kind", "strength"],
+      },
+    },
+    resumeBullets: { type: "ARRAY", items: { type: "STRING" } },
+    star: {
+      type: "OBJECT",
+      properties: {
+        situation: { type: "STRING" },
+        task: { type: "STRING" },
+        action: { type: "STRING" },
+        result: { type: "STRING" },
+      },
+      required: ["situation", "task", "action", "result"],
+    },
+    linkedin: { type: "STRING" },
+    skillGaps: { type: "ARRAY", items: { type: "STRING" } },
+    followUpQuestions: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          question: { type: "STRING" },
+          targetsSkill: { type: "STRING", nullable: true },
+        },
+        required: ["question"],
+      },
+    },
+    pitch: { type: "STRING" },
+  },
+  required: [
+    "verdict", "score", "skills", "evidence", "resumeBullets",
+    "star", "linkedin", "skillGaps", "followUpQuestions", "pitch",
+  ],
+};
+
+const GEMINI_URL =
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+
+export async function analyzeExperience(text: string): Promise<Analysis> {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) throw new Error("GEMINI_API_KEY is missing from .env.local");
+
+  const res = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      contents: [{ role: "user", parts: [{ text }] }],
+      generationConfig: {
+        responseMimeType: "application/json",
+        responseSchema,
+        temperature: 0.2,
+      },
+    }),
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Gemini API error ${res.status}: ${errText}`);
+  }
+
+  const data = await res.json();
+  const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!raw) throw new Error("Gemini returned no content");
+
+  return AnalysisSchema.parse(JSON.parse(raw));
+}
+ 
