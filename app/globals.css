@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+:root {
+  --deep: #0F414A;
+  --deeper: #0A2E35;
+  --abyss: #072229;
+  --alabaster: #EFE8DF;
+  --alabaster-dim: #BFB5A8;
+  --sea: #5E9B8A;
+  --sand: #D8BA98;
+  --terracotta: #B04A3A;
+  --sky: #96C0CE;
+  --border-soft: rgba(239, 232, 223, 0.16);
+}
+
+body {
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -15%, rgba(150, 192, 206, 0.14), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 90% 105%, rgba(94, 155, 138, 0.10), transparent 55%),
+    var(--deep);
+  color: var(--alabaster);
+  min-height: 100vh;
+}
