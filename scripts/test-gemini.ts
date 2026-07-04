@@ -7,6 +7,7 @@ const text =
 analyzeExperience(text)
   .then(async (analysis) => {
     console.log("Engine verdict:", analysis.verdict, "| score:", analysis.score);
+    console.log("STAR situation:", analysis.star.situation);
     const analysisId = await saveRun(text, analysis);
     console.log("Saved! analysisId:", analysisId);
   })

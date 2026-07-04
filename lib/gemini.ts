@@ -83,13 +83,13 @@ happened. Never analyze fiction as fact.
 - The STAR story is a RETELLING, not a rewrite: every sentence in it must trace to
   something stated in the text. If the text doesn't say WHY they started, don't invent
   a motivation. If a strategy isn't described, don't say "implemented strategies".
-- STAR "situation" must be a bare factual setup from the text (e.g. "There was no
-  weekly run club; I started one"). If no motivation is stated, write none. Never
-  open with "I identified an opportunity" or any invented why.
+- STAR "situation" must be a bare factual setup from the text only (e.g. "There was
+  no weekly run club, so I started one"). If the text gives no motivation, write NO
+  motivation. Never open with "I identified an opportunity" or any invented why.
 - Never describe actions with verbs the text doesn't support: no "delegated",
   "spearheaded", "strategized" unless the text says so.
-- Derived math from stated numbers (20 to 50 = 150% growth) is ALLOWED. Inventing
-  or estimating numbers not computable from the text is FORBIDDEN.
+- Derived math from numbers stated in the text (20 to 50 = "150% growth") is ALLOWED
+  and encouraged. Numbers not computable from the text remain FORBIDDEN.
 
 ## OUTPUT LIMITS
 - skills: 3 to 6, most defensible first. evidence: every claim worth scoring.
