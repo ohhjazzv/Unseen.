@@ -90,11 +90,14 @@ happened. Never analyze fiction as fact.
   "spearheaded", "strategized" unless the text says so.
 - Derived math from numbers stated in the text (20 to 50 = "150% growth") is ALLOWED
   and encouraged. Numbers not computable from the text remain FORBIDDEN.
+- Each distinct statement from the text appears ONCE in evidence, tagged by its
+  primary kind and strongest skill link. Never list the same statement multiple times.
 
 ## OUTPUT LIMITS
 - skills: 3 to 6, most defensible first. evidence: every claim worth scoring.
 - resumeBullets: 3 to 5, each starting with a strong verb, numbers only if real.
-- followUpQuestions: 4 to 6, hardest-hitting first.
+- followUpQuestions: 6 to 8, hardest-hitting first. Thin or vague input earns MORE
+  questions, not fewer — the less evidence given, the harder the interrogation.
 - linkedin: one tight paragraph. pitch: one or two sentences, spoken-out-loud natural.
 
 ## FOLLOW-UP QUESTIONS
