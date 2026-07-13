@@ -66,10 +66,18 @@ Currently v1. We wanna upgrade in every way possible.cz I rly think this thing h
 This project was built with AI assistance (Claude) for parts of development, alongside personal hands-on coding.
 
 AI-assisted:e.g. debugging deployment/build errors, boilerplate scaffolding
+
 Human-written: Logic, UI, prompt engineering,Entire code, planning
 
 All README and narrative copy (this file, Our Story, FAQ) is written by Jaz.
 
+## Screenshots
+
+![Home page](1ss.ong)
+
+![The Interview — input screen](2ss.png)
+
+![Results — evidence breakdown](3ss.png)
 
 \## Getting Started
 
