@@ -1,7 +1,9 @@
-import { supabaseAdmin } from "./supabase";
+import { getSupabaseAdmin } from "./supabase";
 import type { Analysis } from "./schema";
 
 export async function saveRun(text: string, analysis: Analysis): Promise<string> {
+  const supabaseAdmin = getSupabaseAdmin();
+
   // 1. Parent: the raw experience
   const { data: exp, error: expErr } = await supabaseAdmin
     .from("experiences")
@@ -56,5 +58,5 @@ export async function saveRun(text: string, analysis: Analysis): Promise<string>
   );
   if (fuErr) throw new Error(`Failed to save follow-ups: ${fuErr.message}`);
 
-  return ana.id; // the analysisId your API route will return
+  return ana.id;
 }

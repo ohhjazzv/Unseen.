@@ -1,13 +1,14 @@
-// Supabase client singleton (server-side, using service role key)
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+let _client: SupabaseClient | null = null;
 
-if (!supabaseUrl || !supabaseServiceRoleKey) {
-  throw new Error(
-    "SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is missing from .env.local"
-  );
+export function getSupabaseAdmin(): SupabaseClient {
+  if (_client) return _client;
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    throw new Error('SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is missing');
+  }
+  _client = createClient(url, key);
+  return _client;
 }
-
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey);
