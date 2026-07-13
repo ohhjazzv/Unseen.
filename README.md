@@ -26,19 +26,19 @@ Currently v1. We wanna upgrade in every way possible.cz I rly think this thing h
 
 
 
-\- \*\*Framework:\*\* Next.js 16 (App Router), React 19
+Framework: Next.js 16 (App Router), React 19
 
-\- \*\*Styling:\*\* Tailwind CSS v4, shadcn/ui
+Styling: Tailwind CSS v4, shadcn/ui
 
-\- \*\*AI Engine:\*\* Google Gemini 2.5 Flash (`@google/generative-ai`)
+AI Engine:Google Gemini 2.5 Flash (`@google/generative-ai`)
 
-\- \*\*Database:\*\* Supabase (Postgres)
+Database: Supabase (Postgres)
 
-\- \*\*Validation:\*\* Zod
+Validation: Zod
 
-\- \*\*Animation:\*\* Framer Motion
+Animation:Framer Motion
 
-\- \*\*Deployment:\*\* Vercel
+Deployment: Vercel
 
 
 
